@@ -1,0 +1,11 @@
+2010-08-09 Cedric Hernalsteens <cedric.hernalsteens@cern.ch>
+
+  * fourrier: enough functionalities to perform recursive frequency identification
+              with line substraction from the input signal
+	* transform: interface for DTFT (Discrete Time Fourier Transform) implemented
+
+2014-04-07 Cedric Hernalsteens <cedric.hernalsteens@cern.ch>
+
+  * frequency: single line tune computation implemented
+  * fourrier: basic interface created
+	* fourrier: First version, 0.0.1 !
