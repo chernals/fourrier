@@ -1,26 +1,13 @@
 require 'ffi'
-
-module LibC
-  extend FFI::Library
-  ffi_lib FFI::Library::LIBC
-
-  # Memory allocators
-  attach_function :malloc, [:size_t], :pointer
-  attach_function :calloc, [:size_t], :pointer
-  attach_function :valloc, [:size_t], :pointer
-  attach_function :realloc, [:pointer, :size_t], :pointer
-  attach_function :free, [:pointer], :void
-
-  # Memory movers
-  attach_function :memcpy, [:pointer, :pointer, :size_t], :pointer
-  attach_function :bcopy, [:pointer, :pointer, :size_t], :void
-
-end # module LibC
+require 'fourrier/libc'
 
 module Fourrier
   extend FFI::Library
   ffi_lib "../../lib/fourrier.so"
+  
+  # Filters
   attach_function :Hanning_r, [ :pointer, :uint, :pointer], :void
+  attach_function :Hanning_c, [ :pointer, :uint, :pointer], :void
   
   # Freqs
   attach_function :allocFrequencies, [ :uint ], :pointer
@@ -31,6 +18,24 @@ module Fourrier
   attach_function :getPhase, [ :pointer, :uint ], :double
   attach_function :setPhase, [ :pointer, :double, :uint], :void
     
+  class Filters
+    def Filters.Hanning(signal)
+      # Create C containers
+      _signal = LibC.malloc(8 * signal.size)
+      _window = LibC.malloc(8 * signal.size)
+      
+      # Obtain a window of the correct size
+      _signal.write_array_of_double Array.new(signal.size) {1}
+      Fourrier.Hanning_r(_signal, signal.size, _window)
+      window = _window.get_array_of_float64(0,signal.size)
+
+      # Multiply the actual signal by the window
+      windowed = Array.new(signal.size) { 0 }
+      signal.each_with_index { |v, i| windowed[i] = v*window[i] }
+      windowed
+    end
+  end # class Filters
+  
   class Freqs
     def initialize(harmonics)
       @p = Fourrier.allocFrequencies(harmonics)
@@ -67,12 +72,7 @@ end
 
 signal = []
 File.open("signal.dat", 'r').each_line {|line| signal << line.to_f}
-_signal = LibC.malloc(8 * signal.size)
-_signal.write_array_of_double signal
-
-_windowed = LibC.malloc(8 * signal.size)
-Fourrier.Hanning_r(_signal, signal.size, _windowed)
-windowed = _windowed.get_array_of_float64(0,signal.size)
+puts Fourrier::Filters::Hanning(signal)
 
 f = Fourrier::Freqs.new(10)
 f.setAmplitude(1.1,2)
