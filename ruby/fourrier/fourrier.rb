@@ -1,37 +1,29 @@
 require 'ffi'
-
-module LibC
-  extend FFI::Library
-  ffi_lib FFI::Library::LIBC
-
-  # Memory allocators
-  attach_function :malloc, [:size_t], :pointer
-  attach_function :calloc, [:size_t], :pointer
-  attach_function :valloc, [:size_t], :pointer
-  attach_function :realloc, [:pointer, :size_t], :pointer
-  attach_function :free, [:pointer], :void
-
-  # Memory movers
-  attach_function :memcpy, [:pointer, :pointer, :size_t], :pointer
-  attach_function :bcopy, [:pointer, :pointer, :size_t], :void
-
-end # module LibC
+require 'fourrier/libc'
 
 module Fourrier
   extend FFI::Library
   ffi_lib "../../lib/fourrier.so"
+  
+  # Filters
   attach_function :Hanning_r, [ :pointer, :uint, :pointer], :void
-
+  attach_function :Hanning_c, [ :pointer, :uint, :pointer], :void
+  
+  # Freqs
+  attach_function :allocFrequencies, [ :uint ], :pointer
+  attach_function :getHarmonics, [ :pointer ], :uint
+  attach_function :getFrequency, [ :pointer, :uint ], :double
+  attach_function :getAmplitude, [ :pointer, :uint ], :double
+  attach_function :setAmplitude, [ :pointer, :double, :uint ], :void
+  attach_function :getPhase, [ :pointer, :uint ], :double
+  attach_function :setPhase, [ :pointer, :double, :uint], :void
 end
+
 
 signal = []
 File.open("signal.dat", 'r').each_line {|line| signal << line.to_f}
-_signal = LibC.malloc(8 * signal.size)
-_signal.write_array_of_double signal
+puts Fourrier::Filters::Hanning(signal)
 
-_windowed = LibC.malloc(8 * signal.size)
-Fourrier.Hanning_r(_signal, signal.size, _windowed)
-windowed = _windowed.get_array_of_float64(0,signal.size)
-
-
-#Hello.puts("Hello, World")
+f = Fourrier::Freqs.new(10)
+f.setAmplitude(1.1,2)
+puts f.getAmplitude(2)
