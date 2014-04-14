@@ -1,11 +1,12 @@
 require 'ffi'
-require 'fourrier/libc'
-require 'fourrier/filters'
-require 'fourrier/freqs'
+require_relative 'fourrier/libc'
+require_relative 'fourrier/filters'
+require_relative 'fourrier/freqs'
 
 module Fourrier
   extend FFI::Library
-  ffi_lib "../../lib/fourrier.so"
+  puts $.
+  ffi_lib "/usr/local/lib/libfourrier.so"
   
   # Filters
   attach_function :Hanning_r, [ :pointer, :uint, :pointer], :void
