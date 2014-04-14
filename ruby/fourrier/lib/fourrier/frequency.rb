@@ -7,6 +7,10 @@ module Fourrier
       Fourrier.frequencies(_signal, signal.size, @freqs.ptr , true, true)
       puts @freqs.getHarmonics
   end
+  
+  def getAmplitudes()
+    @freqs.getAmplitudes
+  end
     
   end # class Frequency
 end # module Fourrier

@@ -16,6 +16,7 @@ module Fourrier
   attach_function :allocFrequencies, [ :uint ], :pointer
   attach_function :getHarmonics, [ :pointer ], :uint
   attach_function :getFrequency, [ :pointer, :uint ], :double
+  attach_function :setFrequency, [ :pointer, :double, :uint ], :void
   attach_function :getAmplitude, [ :pointer, :uint ], :double
   attach_function :setAmplitude, [ :pointer, :double, :uint ], :void
   attach_function :getPhase, [ :pointer, :uint ], :double
