@@ -2,6 +2,7 @@ require 'ffi'
 require_relative 'fourrier/libc'
 require_relative 'fourrier/filters'
 require_relative 'fourrier/freqs'
+require_relative 'fourrier/frequency'
 
 module Fourrier
   extend FFI::Library
@@ -22,5 +23,6 @@ module Fourrier
   attach_function :setPhase, [ :pointer, :double, :uint], :void
   
   # Frequency
+  attach_function :frequencies, [ :pointer, :uint, :pointer, :bool, :bool ], :int
   
 end

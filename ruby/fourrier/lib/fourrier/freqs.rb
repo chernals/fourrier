@@ -8,6 +8,10 @@ module Fourrier
       
     end
     
+    def ptr
+      @p
+    end
+    
     def getHarmonics
       Fourrier.getHarmonics(@p)
     end

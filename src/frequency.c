@@ -110,7 +110,6 @@ frequencies(double *signal,
       else
          freq = interpolateRectSin(transform, length, exact);
       setFrequency(freqs, freq, getHarmonics(freqs)-remaining);
-      printf("Main frequency: %E \n", freq);
       
       // Project and substract the line from the windowed signal
     //  fourierTransform(signal, freqs, freq);
