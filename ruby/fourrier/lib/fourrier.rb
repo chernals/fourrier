@@ -6,7 +6,6 @@ require_relative 'fourrier/frequency'
 
 module Fourrier
   extend FFI::Library
-  puts $.
   ffi_lib "/usr/local/lib/libfourrier.so"
   
   # Filters
