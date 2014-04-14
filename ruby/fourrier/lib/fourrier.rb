@@ -1,5 +1,7 @@
 require 'ffi'
 require 'fourrier/libc'
+require 'fourrier/filters'
+require 'fourrier/freqs'
 
 module Fourrier
   extend FFI::Library
@@ -17,13 +19,7 @@ module Fourrier
   attach_function :setAmplitude, [ :pointer, :double, :uint ], :void
   attach_function :getPhase, [ :pointer, :uint ], :double
   attach_function :setPhase, [ :pointer, :double, :uint], :void
+  
+  # Frequency
+  
 end
-
-
-signal = []
-File.open("signal.dat", 'r').each_line {|line| signal << line.to_f}
-puts Fourrier::Filters::Hanning(signal)
-
-f = Fourrier::Freqs.new(10)
-f.setAmplitude(1.1,2)
-puts f.getAmplitude(2)
