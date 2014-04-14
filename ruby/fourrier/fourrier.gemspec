@@ -7,7 +7,10 @@ Gem::Specification.new do |s|
   s.email       = 'cedric.hernalsteens@cern.ch'
   s.homepage    = 'http://chernals.web.cern.ch/chernals/fourrier'
   s.files       = ["lib/fourrier.rb",
-                   "lib/fourrier/libc.rb"
+                   "lib/fourrier/libc.rb",
+                   "lib/fourrier/filters.rb",
+                   "lib/fourrier/freqs.rb",
+                   "lib/fourrier/frequency.rb"
                   ]
   s.license     = 'MIT'
   s.bindir      = 'bin'

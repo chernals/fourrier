@@ -14,7 +14,8 @@
 #include <math.h>
 #include <complex.h>
 
-void Hanning_r(double *signal, const unsigned int length, double *w)
+void
+Hanning_r(double *signal, const unsigned int length, double *w)
 {
   for(unsigned int i = 0; i < length; i++)
   {
@@ -25,7 +26,8 @@ void Hanning_r(double *signal, const unsigned int length, double *w)
   }
 }
 
-void Hanning_c(double _Complex *signal, const unsigned int length, double _Complex *w)
+void
+Hanning_c(double _Complex *signal, const unsigned int length, double _Complex *w)
 {
   for(unsigned int i=0; i<length; i++)
   {

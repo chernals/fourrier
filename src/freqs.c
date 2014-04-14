@@ -26,7 +26,8 @@ struct Freqs{
    _Bool allocated_basis;
 };
 
-struct Freqs* allocFrequencies(const unsigned short int h)
+struct Freqs*
+allocFrequencies(const unsigned short int h)
 {
    struct Freqs* f = (struct Freqs*) malloc(sizeof(struct Freqs));
    f->harmonics = h;
@@ -36,7 +37,8 @@ struct Freqs* allocFrequencies(const unsigned short int h)
    return f;
 }
 
-short int allocFourierBasis(struct Freqs* f, const unsigned int length)
+short int
+allocFourierBasis(struct Freqs* f, const unsigned int length)
 {
   if(!f->allocated_basis)
   {
@@ -64,47 +66,56 @@ addBasisElement(struct Freqs* f, const double freq)
   return f->basis[f->basis_elements-1];
 }
 
-void freeFrequencies(struct Freqs* f)
+void 
+freeFrequencies(struct Freqs* f)
 {
    /* TO DO */
 }
 
-unsigned short int getHarmonics(const struct Freqs* f)
+unsigned short int
+getHarmonics(const struct Freqs* f)
 {
   return f->harmonics;
 }
 
-double getFrequency(const struct Freqs* f, const unsigned short int n)
+double
+getFrequency(const struct Freqs* f, const unsigned short int n)
 {
    return f->frequencies[n];
 }
 
-void setFrequency(struct Freqs* f, const double freq, const unsigned short int n)
+void
+setFrequency(struct Freqs* f, const double freq, const unsigned short int n)
 {
   f->frequencies[n] = freq;
 }
 
-double getAmplitude(const struct Freqs* f, const unsigned short int n)
+double
+getAmplitude(const struct Freqs* f, const unsigned short int n)
 {
    return f->amplitudes[n];
 }
 
-void setAmplitude(struct Freqs* f, const double amp, const unsigned short int n)
+void
+setAmplitude(struct Freqs* f, const double amp, const unsigned short int n)
 {
   f->amplitudes[n] = amp;
 }
 
-double getPhase(const struct Freqs* f, const unsigned short int n)
+double
+getPhase(const struct Freqs* f, const unsigned short int n)
 {
    return f->phases[n];
 }
 
-void setPhase(const struct Freqs* f, const double phase, const unsigned short int n)
+void 
+setPhase(const struct Freqs* f, const double phase, const unsigned short int n)
 {
   f->phases[n] = phase;
 }
 
-double _Complex* getVector(const struct Freqs* f, const unsigned short int n)
+double _Complex*
+getVector(const struct Freqs* f, const unsigned short int n)
 {
   return f->basis[n];
 }
